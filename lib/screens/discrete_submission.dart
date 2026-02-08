@@ -28,7 +28,7 @@ class DiscreteSubmissionScreen extends StatelessWidget {
                   _row("Grading status", "Graded"),
                   _row(
                     "Time remaining",
-                    "Assignment was submitted 9 days 4 hours early",
+                    "Assignment was submitted 8 days 23 hours early",
                   ),
                   _row("Last modified", "22 May 2026, 4:32 PM"),
                 ],

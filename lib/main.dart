@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
+import 'db/app_db.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await AppDb.instance.database;
+
   runApp(const MyDuAppRoot());
 }
 

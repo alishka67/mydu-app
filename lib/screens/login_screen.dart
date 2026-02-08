@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../MyDu.dart';
+import '../db/app_db.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,8 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               const SizedBox(height: 40),
-
-             
               const Text(
                 "ASTANA IT UNIVERSITY",
                 style: TextStyle(
@@ -34,9 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-
               const SizedBox(height: 40),
-
               const CircleAvatar(
                 radius: 48,
                 backgroundColor: Color(0xFF1E1E1E),
@@ -46,9 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.orange,
                 ),
               ),
-
               const SizedBox(height: 24),
-
               const Text(
                 "Welcome to MyDu",
                 style: TextStyle(
@@ -57,27 +52,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               const SizedBox(height: 8),
-
-              const Text(
-                "Log in to continue",
-                style: TextStyle(color: Colors.grey),
-              ),
-
+              const Text("Log in to continue",
+                  style: TextStyle(color: Colors.grey)),
               const SizedBox(height: 32),
-
-              
               _inputField(
                 controller: _emailController,
                 label: "Email",
                 icon: Icons.email_outlined,
                 obscure: false,
               ),
-
               const SizedBox(height: 16),
-
-              
               _inputField(
                 controller: _passwordController,
                 label: "Password",
@@ -85,9 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscure: _hidePassword,
                 suffix: IconButton(
                   icon: Icon(
-                    _hidePassword
-                        ? Icons.visibility_off
-                        : Icons.visibility,
+                    _hidePassword ? Icons.visibility_off : Icons.visibility,
                     color: Colors.grey,
                   ),
                   onPressed: () {
@@ -97,24 +80,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
               ),
-
               const SizedBox(height: 12),
-
-              
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: _forgotPassword,
-                  child: const Text(
-                    "Forgot password?",
-                    style: TextStyle(color: Colors.blue),
-                  ),
+                  child: const Text("Forgot password?",
+                      style: TextStyle(color: Colors.blue)),
                 ),
               ),
-
               const SizedBox(height: 24),
-
-              
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -136,19 +111,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-
               const Spacer(),
-
               const Text(
                 "By tapping \"Login\", you agree to the\n"
                 "Terms of Service and Privacy Policy",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
-
               const SizedBox(height: 16),
             ],
           ),
@@ -157,7 +126,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  
   Widget _inputField({
     required TextEditingController controller,
     required String label,
@@ -184,29 +152,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  
-  void _login() {
+  Future<void> _login() async {
     if (_emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty) {
+          
+      await AppDb.instance.saveLogin(_emailController.text.trim());
+
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (_) => const MyDuApp(),
-        ),
+        MaterialPageRoute(builder: (_) => const MyDuApp()),
       );
     }
   }
 
-  
   void _forgotPassword() {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         backgroundColor: const Color(0xFF1E1E1E),
-        title: const Text(
-          "Password Recovery",
-          style: TextStyle(color: Colors.white),
-        ),
+        title:
+            const Text("Password Recovery", style: TextStyle(color: Colors.white)),
         content: const Text(
           "Instructions for password recovery\nwill be sent to your email.",
           style: TextStyle(color: Colors.grey),
@@ -220,4 +186,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-}
+ }

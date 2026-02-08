@@ -283,4 +283,4 @@ class Lesson {
     required this.room,
     required this.teacher,
   });
-}
+ } 
